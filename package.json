@@ -1,7 +1,7 @@
 {
     "name": "@cawita/bump-simple",
     "version": "1.0.20",
-    "description": "* update changelog\n* add git tag\n* commit\n* publish the new version to npm",
+    "description": "update changelog, add git tag, commit and publish the new version to npm",
     "main": "bump-simple.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
@@ -13,12 +13,12 @@
     "license": "ISC",
     "repository": {
         "type": "git",
-        "url": "git+https://gitlab.com/cawita-technologies/modules/bump-simple.git"
+        "url": "git+https://github.com/top-kat/bump-simple.git"
     },
     "bugs": {
-        "url": "https://gitlab.com/cawita-technologies/modules/bump-simple/issues"
+        "url": "https://github.com/top-kat/bump-simple/issues"
     },
-    "homepage": "https://gitlab.com/cawita-technologies/modules/bump-simple#readme",
+    "homepage": "https://github.com/top-kat/bump-simple",
     "dependencies": {
         "git-log-parser": "^1.2.0",
         "node-telegram-bot-api": "^0.40.0",
