@@ -1,0 +1,27 @@
+{
+    "name": "@cawita/bump-simple",
+    "version": "1.0.20",
+    "description": "* update changelog\n* add git tag\n* commit\n* publish the new version to npm",
+    "main": "bump-simple.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "bump:major": "node ./bump-simple.js --major",
+        "bump:minor": "node ./bump-simple.js --minor",
+        "bump:patch": "node ./bump-simple.js --patch"
+    },
+    "author": "538ROMEO",
+    "license": "ISC",
+    "repository": {
+        "type": "git",
+        "url": "git+https://gitlab.com/cawita-technologies/modules/bump-simple.git"
+    },
+    "bugs": {
+        "url": "https://gitlab.com/cawita-technologies/modules/bump-simple/issues"
+    },
+    "homepage": "https://gitlab.com/cawita-technologies/modules/bump-simple#readme",
+    "dependencies": {
+        "git-log-parser": "^1.2.0",
+        "node-telegram-bot-api": "^0.40.0",
+        "inquirer": "^6.5.2"
+    }
+}
