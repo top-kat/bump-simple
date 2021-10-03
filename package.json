@@ -1,6 +1,6 @@
 {
     "name": "@cawita/bump-simple",
-    "version": "1.0.20",
+    "version": "1.0.21",
     "description": "update changelog, add git tag, commit and publish the new version to npm",
     "main": "bump-simple.js",
     "scripts": {
