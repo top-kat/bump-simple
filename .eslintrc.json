@@ -18,13 +18,21 @@
         "quotes": [
             "error",
             "single",
-            { "allowTemplateLiterals": true }
+            {
+                "allowTemplateLiterals": true
+            }
         ],
         "semi": [
             "error",
-            "always"
+            "never"
         ],
         "no-this-before-super": "off",
-        "brace-style": [1, "1tbs", { "allowSingleLine": true }]
+        "brace-style": [
+            1,
+            "1tbs",
+            {
+                "allowSingleLine": true
+            }
+        ]
     }
 }
