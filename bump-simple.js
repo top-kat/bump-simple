@@ -2,7 +2,6 @@
 // need to be first
 
 const log = require('git-log-parser')
-const path = require('path')
 const fs = require('fs')
 const inquirer = require('inquirer')
 const util = require('util')
