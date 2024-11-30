@@ -58,7 +58,7 @@ async function generateLog() {
         summary.version = newVersionStr
         summary.name = name
 
-        C.info(`READY TO PUSH ${name} from ${version} to ${newVersionStr} 💪`)
+        C.info(`Ready to bump "${name}" from ${versionStr} to ${newVersionStr} 🚀`)
 
         await inquirer.prompt({
             type: 'list',

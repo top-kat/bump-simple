@@ -6,9 +6,9 @@
     "scripts": {
         "build": "tsc",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "bump:major": "node ./bump-simple.js --major",
-        "bump:minor": "node ./bump-simple.js --minor",
-        "bump:patch": "node ./bump-simple.js --patch"
+        "bump:major": "ts-node ./bump-simple.ts --major",
+        "bump:minor": "ts-node ./bump-simple.ts --minor",
+        "bump:patch": "ts-node ./bump-simple.ts --patch"
     },
     "author": "538ROMEO",
     "license": "ISC",
