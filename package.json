@@ -22,7 +22,11 @@
     "homepage": "https://github.com/top-kat/bump-simple",
     "dependencies": {
         "git-log-parser": "^1.2.0",
+        "inquirer": "^6.5.2",
         "node-telegram-bot-api": "^0.40.0",
-        "inquirer": "^6.5.2"
+        "topkat-utils": "^1.2.107"
+    },
+    "devDependencies": {
+        "@types/node": "^22.10.1"
     }
 }

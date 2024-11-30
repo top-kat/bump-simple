@@ -1,13 +1,14 @@
 /* eslint-disable no-console */
 // need to be first
+import gitLogParser from 'git-log-parser'
+import fs from 'fs'
+import inquirer from 'inquirer'
+import util from 'util'
+import childProcess from 'child_process'
 
-const log = require('git-log-parser')
-const fs = require('fs')
-const inquirer = require('inquirer')
-const util = require('util')
-const exec = util.promisify(require('child_process').exec)
+import { C, timeout } from 'topkat-utils'
 
-const timeout = async ms => new Promise(res => setTimeout(res, ms))
+const exec = util.promisify(childProcess.exec)
 
 generateLog()
 
@@ -33,7 +34,7 @@ const execSafe = async command => {
 async function generateLog() {
 
     try {
-        const summary = {}
+        const summary = {} as { version: string, name: string, changelog: string }
 
         const dirName = process.cwd()
         const packagePath = `${dirName}/package.json`
@@ -45,7 +46,7 @@ async function generateLog() {
 
         const versionTypeN = ['major', 'minor', 'patch'].indexOf(versionType)
 
-        const stream = log.parse()
+        const stream = gitLogParser.parse()
 
 
         const { version: versionStr, name } = require(packagePath)
@@ -57,10 +58,12 @@ async function generateLog() {
         summary.version = newVersionStr
         summary.name = name
 
+        C.info(`READY TO PUSH ${name} from ${version} to ${newVersionStr} 💪`)
+
         await inquirer.prompt({
             type: 'list',
             name: 'confirm',
-            message: 'Please,\n\nCOMMIT your changes and CONFIRM.\n\nA special commit will be made with the version number.\n',
+            message: 'Please,\n\nCOMMIT your actual changes and CONFIRM.\n\nA special commit will be made with the version number.\n',
             choices: ['Ok, I have done it'],
         })
 
@@ -115,9 +118,9 @@ async function generateLog() {
         await execSafe(`git commit -m 'version - ${newVersionStr}'`)
         await execSafe(`git push`)
 
-        await execSafe(`npm version ${versionType}`, false)
+        await execSafe(`npm version ${versionType}`)
 
-        await execSafe(`npm publish`, false)
+        await execSafe(`npm publish`)
 
         await execSafe(`git push`)
 
