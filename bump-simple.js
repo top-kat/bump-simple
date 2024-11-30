@@ -39,6 +39,8 @@ async function generateLog() {
         const packagePath = `${dirName}/package.json`
         const changelogPath = `${dirName}/CHANGELOG.md`
 
+        const updateChangelog = fs.existsSync(changelogPath)
+
         const versionType = process.argv[2].replace('--', '')
 
         const versionTypeN = ['major', 'minor', 'patch'].indexOf(versionType)
@@ -54,6 +56,13 @@ async function generateLog() {
         const newVersionStr = newVersion.join('.')
         summary.version = newVersionStr
         summary.name = name
+
+        await inquirer.prompt({
+            type: 'list',
+            name: 'confirm',
+            message: 'Please,\n\nCOMMIT your changes and CONFIRM.\n\nA special commit will be made with the version number.\n',
+            choices: ['Ok, I have done it'],
+        })
 
         const changelogContent = fs.readFileSync(changelogPath, 'utf-8')
 
@@ -87,19 +96,14 @@ async function generateLog() {
 
         }
 
-        await inquirer.prompt({
-            type: 'list',
-            name: 'confirm',
-            message: 'Please,\n\nCOMMIT your changes and CONFIRM.\n\nA special commit will be made with the version number.\n',
-            choices: ['Ok, I have done it'],
-        })
-
-        const str = fs.readFileSync(changelogPath)
-        if (changeLogAppend.split('\n').filter(n => n).length > 1) {
-            let fileContent = changeLogAppend + '\n' + str
-            fileContent = fileContent.split('\n').filter((e, i, arr) => arr.indexOf(e) === i).join('\n').replace(/\n+(#+)/g, '\n\n$1')
-            fs.writeFileSync(changelogPath, fileContent)
-            summary.changelog = changeLogAppend
+        if (updateChangelog) {
+            const str = fs.readFileSync(changelogPath)
+            if (changeLogAppend.split('\n').filter(n => n).length > 1) {
+                let fileContent = changeLogAppend + '\n' + str
+                fileContent = fileContent.split('\n').filter((e, i, arr) => arr.indexOf(e) === i).join('\n').replace(/\n+(#+)/g, '\n\n$1')
+                fs.writeFileSync(changelogPath, fileContent)
+                summary.changelog = changeLogAppend
+            }
         }
 
         //----------------------------------------
