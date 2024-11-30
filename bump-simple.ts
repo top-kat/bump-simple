@@ -124,6 +124,8 @@ async function generateLog() {
 
         await execSafe(`git push`)
 
+        C.success(`Successfully published "${name}" v${newVersionStr}`)
+
     } catch (error) {
         console.error(error)
     }
