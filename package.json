@@ -2,8 +2,9 @@
     "name": "bump-simple",
     "version": "1.0.25",
     "description": "update changelog, add git tag, commit and publish the new version to npm in ONE COMMAND",
-    "main": "bump-simple.js",
+    "main": "./dist/bump-simple.js",
     "scripts": {
+        "build": "tsc",
         "test": "echo \"Error: no test specified\" && exit 1",
         "bump:major": "node ./bump-simple.js --major",
         "bump:minor": "node ./bump-simple.js --minor",
