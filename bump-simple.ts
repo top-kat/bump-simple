@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /* eslint-disable no-console */
 // need to be first
 import gitLogParser from 'git-log-parser'
@@ -5,8 +7,14 @@ import fs from 'fs'
 import inquirer from 'inquirer'
 import util from 'util'
 import childProcess from 'child_process'
+import { app } from 'command-line-application'
 
 import { C, timeout } from 'topkat-utils'
+
+
+
+
+
 
 const exec = util.promisify(childProcess.exec)
 
@@ -42,7 +50,8 @@ async function generateLog() {
 
         const updateChangelog = fs.existsSync(changelogPath)
 
-        const versionType = process.argv[2].replace('--', '')
+        const versionType = major ? 'major' : minor ? 'minor' : 'patch'
+        const doNotDisplayCommitMsg = y
 
         const versionTypeN = ['major', 'minor', 'patch'].indexOf(versionType)
 
@@ -60,7 +69,7 @@ async function generateLog() {
 
         C.info(`Ready to bump "${name}" from ${versionStr} to ${newVersionStr} 🚀`)
 
-        await inquirer.prompt({
+        if (!doNotDisplayCommitMsg) await inquirer.prompt({
             type: 'list',
             name: 'confirm',
             message: 'Please,\n\nCOMMIT your actual changes and CONFIRM.\n\nA special commit will be made with the version number.\n',
