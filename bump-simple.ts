@@ -12,8 +12,17 @@ import { app } from 'command-line-application'
 import { C, timeout } from 'topkat-utils'
 
 
-
-
+const { y = false, major, minor, patch } = app({
+    name: 'bump',
+    description: 'Generate backend SDKs',
+    examples: ['bump'],
+    options: [
+        { name: 'y', type: Boolean, },
+        { name: 'major', type: Boolean, },
+        { name: 'minor', type: Boolean, },
+        { name: 'patch', type: Boolean, }
+    ]
+})
 
 
 const exec = util.promisify(childProcess.exec)

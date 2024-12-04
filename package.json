@@ -21,6 +21,7 @@
     },
     "homepage": "https://github.com/top-kat/bump-simple",
     "dependencies": {
+        "command-line-application": "^0.10.1",
         "git-log-parser": "^1.2.0",
         "inquirer": "^6.5.2",
         "node-telegram-bot-api": "^0.40.0",
@@ -28,5 +29,8 @@
     },
     "devDependencies": {
         "@types/node": "^22.10.1"
+    },
+    "bin": {
+        "bump": "dist/bump-simple.js"
     }
 }
