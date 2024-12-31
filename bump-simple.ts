@@ -85,39 +85,40 @@ async function generateLog() {
             choices: ['Ok, I have done it'],
         })
 
-        const changelogContent = fs.readFileSync(changelogPath, 'utf-8')
-
-        const chunks = []
-        let changeLogAppend = `### v${newVersionStr}\n`
-
-        stream.on('data', chunk => chunks.push(chunk))
-
-        let unlock = false
-        stream.on('end', () => unlock = true)
-        while (!unlock) await timeout(50)
-
         //----------------------------------------
         // CHANGELOG
         //----------------------------------------
-        for (const commit of chunks) {
-            let body = commit.subject + (commit.body ? '\n' + commit.body : '')
-            // subject: 'version - 3.9.1'
-            if (body.includes(`version - ${versionStr}`)) break // we find last version
+        if (updateChangelog) {
+            const changelogContent = fs.readFileSync(changelogPath, 'utf-8')
 
-            body = body
-                .replace(/ \* /g, '\n* ') // * add a line break in lists
-                .replace(/^(?! ?[*-]).*\n?/gm, '') // * remove all lines that do not start with * or # or -
+            const chunks = []
+            let changeLogAppend = `### v${newVersionStr}\n`
 
-            if (
-                !(/^\s*$/.test(body)) && // empty lines no text
-                !changelogContent.includes(body)
-            ) {
-                changeLogAppend += body + '\n'
+            stream.on('data', chunk => chunks.push(chunk))
+
+            let unlock = false
+            stream.on('end', () => unlock = true)
+            while (!unlock) await timeout(50)
+
+            for (const commit of chunks) {
+                let body = commit.subject + (commit.body ? '\n' + commit.body : '')
+                // subject: 'version - 3.9.1'
+                if (body.includes(`version - ${versionStr}`)) break // we find last version
+
+                body = body
+                    .replace(/ \* /g, '\n* ') // * add a line break in lists
+                    .replace(/^(?! ?[*-]).*\n?/gm, '') // * remove all lines that do not start with * or # or -
+
+                if (
+                    !(/^\s*$/.test(body)) && // empty lines no text
+                    !changelogContent.includes(body)
+                ) {
+                    changeLogAppend += body + '\n'
+                }
+
             }
 
-        }
 
-        if (updateChangelog) {
             const str = fs.readFileSync(changelogPath)
             if (changeLogAppend.split('\n').filter(n => n).length > 1) {
                 let fileContent = changeLogAppend + '\n' + str
@@ -125,7 +126,7 @@ async function generateLog() {
                 fs.writeFileSync(changelogPath, fileContent)
                 summary.changelog = changeLogAppend
             }
-        }
+        } else C.warning(false, 'CHANGELOG.md file not found. Changelog has not been updated. If you want to create a changelog based on your commits, please add a blank CHANGELOG.md file in the root of your project.')
 
         //----------------------------------------
         // CHANGE VERSION and git new tag
