@@ -1,6 +1,6 @@
 {
     "name": "bump-simple",
-    "version": "1.0.28",
+    "version": "1.0.29",
     "description": "update changelog, add git tag, commit and publish the new version to npm in ONE COMMAND",
     "main": "./dist/bump-simple.js",
     "scripts": {
